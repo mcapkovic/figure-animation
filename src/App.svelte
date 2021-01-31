@@ -6,12 +6,20 @@
   let idTimeout1 = 0;
   let idTimeout2 = 0;
 
+  const IDLE = "idle";
+  const IDLE2 = "idle2";
+  const SLIDE = "slide";
+  const RUN = "run";
+  const CROUCH = "crouch";
+  const ATTACK = 'attack';
+  const JUMP = 'jump';
+
   function animationChange(type) {
     clearTimeout(idTimeout1);
     clearTimeout(idTimeout2);
     aminationType = type;
   }
-  
+
   function changeDirection() {
     aminationDirection = aminationDirection === "right" ? "left" : "right";
   }
@@ -21,10 +29,10 @@
     clearTimeout(idTimeout2);
     aminationType = type;
     idTimeout2 = setTimeout(function () {
-      aminationType = "idle2";
+      aminationType = IDLE2;
     }, 700);
     idTimeout1 = setTimeout(function () {
-      aminationType = "idle";
+      aminationType = IDLE;
     }, 3000);
   }
 
@@ -33,20 +41,21 @@
     clearTimeout(idTimeout2);
     aminationType = type;
     idTimeout1 = setTimeout(function () {
-      aminationType = "idle";
+      aminationType = IDLE;
     }, 1200);
   }
 
-  function animationDown(type) {
+  function animationDown() {
     clearTimeout(idTimeout1);
-    clearTimeout(idTimeout2);
-    if (aminationType === "run") {
-	  aminationType = "slide";
-	  idTimeout1 = setTimeout(function () {
-      aminationType = "run";
-    }, 500);
+	clearTimeout(idTimeout2);
+
+	if (aminationType === RUN || aminationType === JUMP) {
+      aminationType = SLIDE;
+      idTimeout1 = setTimeout(function () {
+        aminationType = RUN;
+      }, 500);
     } else {
-      aminationType = "crouch";
+      aminationType = CROUCH;
     }
   }
 </script>
@@ -59,12 +68,12 @@
       alt="figure"
     />
   </div>
-  <button on:click={() => animationChange("idle")}>idle</button>
+  <button on:click={() => animationChange(IDLE)}>{IDLE}</button>
   <!-- <button on:click={() => animationChange("idle2")}>idle2</button> -->
-  <button on:click={() => animationChange("run")}>run</button>
-  <button on:click={() => animationJump("jump")}>jump</button>
-  <button on:click={() => animationAttack("attack")}>attack</button>
-  <button on:click={() => animationDown()}>crouch</button>
+  <button on:click={() => animationChange(RUN)}>{RUN}</button>
+  <button on:click={() => animationJump(JUMP)}>{JUMP}</button>
+  <button on:click={() => animationAttack(ATTACK)}>{ATTACK}</button>
+  <button on:click={() => animationDown()}>crouch/slide</button>
   <button on:click={changeDirection}>change direction</button>
 </main>
 
@@ -237,7 +246,7 @@
       left: 0;
       top: -740px;
     }
-	100% {
+    100% {
       left: 0;
       top: -740px;
     }
@@ -316,8 +325,8 @@
     animation-timing-function: step-start;
   }
   .figure__body--slide {
-	left: 0;
-      top: -740px;
+    left: 0;
+    top: -740px;
     animation-name: slide;
     animation-duration: 0.5s;
     /* animation-iteration-count: infinite; */
