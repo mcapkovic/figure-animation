@@ -11,8 +11,8 @@
   const SLIDE = "slide";
   const RUN = "run";
   const CROUCH = "crouch";
-  const ATTACK = 'attack';
-  const JUMP = 'jump';
+  const ATTACK = "attack";
+  const JUMP = "jump";
 
   function animationChange(type) {
     clearTimeout(idTimeout1);
@@ -47,9 +47,9 @@
 
   function animationDown() {
     clearTimeout(idTimeout1);
-	clearTimeout(idTimeout2);
+    clearTimeout(idTimeout2);
 
-	if (aminationType === RUN || aminationType === JUMP) {
+    if (aminationType === RUN || aminationType === JUMP) {
       aminationType = SLIDE;
       idTimeout1 = setTimeout(function () {
         aminationType = RUN;
@@ -75,6 +75,13 @@
   <button on:click={() => animationAttack(ATTACK)}>{ATTACK}</button>
   <button on:click={() => animationDown()}>crouch/slide</button>
   <button on:click={changeDirection}>change direction</button>
+  <div><a href="https://rvros.itch.io/animated-pixel-hero">hero source</a></div>
+  <!-- <div >
+    <img
+      src="/img/background.png"
+      alt="figure"
+    />
+  </div> -->
 </main>
 
 <style>
