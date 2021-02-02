@@ -1,10 +1,14 @@
 <script>
   //   export let name;
  import Demo from './components/Demo.svelte'
+ import Demo2 from './components/Demo2.svelte'
+
 </script>
 
 <main>
 	<Demo />
+	<Demo2 />
+
 </main>
 
 <style>
