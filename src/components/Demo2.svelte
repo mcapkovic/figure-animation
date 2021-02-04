@@ -69,25 +69,27 @@
         }else if(event.keyCode === 37){
             aminationDirection = 'left'
             animationChange(RUN)
-        }else if(event.keyCode === 38){
-            animationJump(JUMP)
-        }else if(event.keyCode === 40){
-            animationDown()
-        }else if(event.keyCode === 32){
-            animationAttack(ATTACK)
         }
+        // else if(event.keyCode === 38){
+        //     animationJump(JUMP)
+        // }else if(event.keyCode === 40){
+        //     animationDown()
+        // }else if(event.keyCode === 32){
+        //     animationAttack(ATTACK)
+        // }
     }
     
     function handleKeyup(event) {  
-        console.log(event)  
+        // console.log(event)  
         if(event.keyCode === 39 && aminationDirection === 'right' && aminationType === RUN){
             animationChange(IDLE)
         }else if( event.keyCode === 37 && aminationDirection === 'left' && aminationType === RUN){
             animationChange(IDLE)
 
-        }else if(event.keyCode === 40){
-            animationChange(IDLE)
         }
+        // else if(event.keyCode === 40){
+        //     animationChange(IDLE)
+        // }
 	}
   </script>
 
@@ -96,14 +98,14 @@
   
   <div class="demo">
     <Hero {aminationType} {aminationDirection} />
-    <button on:click={() => animationChange(IDLE)}>{IDLE}</button>
+    <!-- <button on:click={() => animationChange(IDLE)}>{IDLE}</button> -->
     <!-- <button on:click={() => animationChange("idle2")}>idle2</button> -->
-    <button on:click={() => animationChange(RUN)}>{RUN}</button>
+    <!-- <button on:click={() => animationChange(RUN)}>{RUN}</button>
     <button on:click={() => animationJump(JUMP)}>{JUMP}</button>
     <button on:click={() => animationAttack(ATTACK)}>{ATTACK}</button>
     <button on:click={() => animationDown()}>crouch/slide</button>
-    <button on:click={changeDirection}>change direction</button>
-    <div><a href="https://rvros.itch.io/animated-pixel-hero">hero source</a></div>
+    <button on:click={changeDirection}>change direction</button> -->
+    <!-- <div><a href="https://rvros.itch.io/animated-pixel-hero">hero source</a></div> -->
     <!-- <div >
         <img
           src="/img/background.png"
