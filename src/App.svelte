@@ -6,7 +6,7 @@
 </script>
 
 <main>
-	<Demo />
+	<!-- <Demo /> -->
 	<Demo2 />
 
 </main>
