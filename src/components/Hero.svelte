@@ -177,7 +177,7 @@
     width: 240px;
     height: 185px;
     overflow: hidden;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     position: relative;
     margin: 0 auto;
   }

@@ -88,9 +88,12 @@
 
   function start() {
     moveBackroungID = requestAnimationFrame(moveX);
+    animationChange(RUN);
   }
   function stop() {
     cancelAnimationFrame(moveBackroungID);
+    moveBackroungID = null;
+    animationChange(IDLE);
   }
 
   function handleKeydown(event) {
@@ -142,13 +145,13 @@
     //     animationChange(IDLE)
     // }
   }
-
 </script>
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
 
 <div class="demo">
-  <div
+  <div class="demo-game">
+    <!-- <div
     class="test"
     style={`background-position: 
    ${background9X}px 0,
@@ -158,11 +161,11 @@
    ${background5X}px 0,
    0 0,
    0 0;`}
-  />
+  /> -->
 
-  <div
-    class="test2"
-    style={`background-position: 
+    <div
+      class="test2"
+      style={`background-position: 
      ${background9X}px 0,
      ${background8X}px 0, 
      ${background8X}px 0, 
@@ -174,20 +177,41 @@
      ${background3X}px 0,
      0 0,
      0 0;`}
-  />
+    />
 
-  <!-- <div
+    <!-- <div class="test3">
+    <div class="test3-10" style={`background-position: 0 0;`} />
+    <div class="test3-9" style={`background-position: 0 0;`} />
+    <div class="test3-8" style={`background-position: ${background3X}px 0;`} />
+    <div class="test3-7" style={`background-position: ${background4X}px 0;`} />
+    <div class="test3-6" style={`background-position: ${background4X}px 0;`} />
+    <div class="test3-5" style={`background-position: ${background5X}px 0;`} />
+    <div class="test3-4" style={`background-position: ${background5X}px 0;`} />
+    <div class="test3-3" style={`background-position: ${background8X}px 0;`} />
+    <div class="test3-2" style={`background-position: ${background8X}px 0;`} />
+    <div class="test3-1" style={`background-position: ${background8X}px 0;`} />
+    <div class="test3-0" style={`background-position: ${background9X}px 0;`} />
+  </div> -->
+
+    <!-- <div
   class="test"
   style={`background-position: ${background9X}px 0;`}
 /> -->
 
-  <div>
-    <Hero {aminationType} {aminationDirection} />
+    <div class="hero-wrapper">
+      <Hero {aminationType} {aminationDirection} />
+    </div>
   </div>
 
-  <button on:click={moveX}>move x</button>
-  <button on:click={start}>start</button>
-  <button on:click={stop}>stop</button>
+  <!-- <button on:click={start}>start</button>
+  <button on:click={stop}>stop</button> -->
+
+  <div>use left/right arrows or button</div>
+  {#if aminationType !== RUN}
+    <button on:click={start}>start</button>
+  {:else}
+    <button on:click={stop}>stop</button>
+  {/if}
 
   <!-- <button on:click={() => animationChange(IDLE)}>{IDLE}</button> -->
   <!-- <button on:click={() => animationChange("idle2")}>idle2</button> -->
@@ -242,10 +266,125 @@
     /* background-position: 20px -90px; */
     will-change: background-position;
   }
+
+  .test3 {
+    position: relative;
+  }
+
+  .test3-0 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0000_9.png");
+  }
+
+  .test3-1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0001_8.png");
+  }
+  .test3-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0002_7.png");
+  }
+
+  .test3-3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0003_6.png");
+  }
+  .test3-4 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0004_Lights.png");
+  }
+  .test3-5 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0005_5.png");
+  }
+  .test3-6 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0006_4.png");
+  }
+  .test3-7 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0007_Lights.png");
+  }
+  .test3-8 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0008_3.png");
+  }
+  .test3-9 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0009_2.png");
+  }
+  .test3-10 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 793px;
+    width: 100%;
+    background-image: url("/img/background_layers/Layer_0010_1.png");
+  }
+
+  /* url("/img/background_layers/Layer_0002_7.png"),
+    url("/img/background_layers/Layer_0003_6.png"),
+    url("/img/background_layers/Layer_0004_Lights.png"),
+    ,
+    ,
+    ,
+   ,
+    ,
+     */
   .demo {
     text-align: center;
     padding: 1em;
     margin: 0 auto;
+  }
+
+  .demo-game {
     position: relative;
+  }
+
+  .hero-wrapper {
+    position: absolute;
+    bottom: 22px;
+    left: 150px;
+    transform: scale(0.6);
   }
 </style>
