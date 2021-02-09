@@ -151,6 +151,8 @@
 
 <div class="demo">
   <div class="demo-game">
+ 
+
     <!-- <div
     class="test"
     style={`background-position: 
@@ -164,7 +166,7 @@
   /> -->
 
     <div
-      class="test2"
+      class="test2 demo2-game__background"
       style={`background-position: 
      ${background9X}px 0,
      ${background8X}px 0, 
@@ -197,21 +199,23 @@
   class="test"
   style={`background-position: ${background9X}px 0;`}
 /> -->
+<div class="demo2-game__controls">
+  <div>use left/right arrows or button</div>
+  {#if aminationType !== RUN}
+    <button on:click={start}>run</button>
+  {:else}
+    <button on:click={stop}>stop</button>
+  {/if}
+</div>
+
 
     <div class="hero-wrapper">
       <Hero {aminationType} {aminationDirection} />
     </div>
   </div>
-
+  
   <!-- <button on:click={start}>start</button>
   <button on:click={stop}>stop</button> -->
-
-  <div>use left/right arrows or button</div>
-  {#if aminationType !== RUN}
-    <button on:click={start}>start</button>
-  {:else}
-    <button on:click={stop}>stop</button>
-  {/if}
 
   <!-- <button on:click={() => animationChange(IDLE)}>{IDLE}</button> -->
   <!-- <button on:click={() => animationChange("idle2")}>idle2</button> -->
@@ -373,12 +377,27 @@
      */
   .demo {
     text-align: center;
-    padding: 1em;
+    /* padding: 1em; */
     margin: 0 auto;
   }
 
   .demo-game {
     position: relative;
+    height: 100vh;
+    background-color: #7693b3;
+  }
+
+  .demo2-game__controls {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .demo2-game__background{
+    position: absolute;
+    left: 0;
+    bottom:0;
   }
 
   .hero-wrapper {
