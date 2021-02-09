@@ -404,7 +404,7 @@
   .hero-wrapper {
     position: absolute;
     bottom: 22px;
-    left: 150px;
+    left: 10%;
     transform: scale(0.6);
   }
 </style>
