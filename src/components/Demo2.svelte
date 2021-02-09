@@ -213,7 +213,7 @@
       <Hero {aminationType} {aminationDirection} />
     </div>
   </div>
-  
+
   <!-- <button on:click={start}>start</button>
   <button on:click={stop}>stop</button> -->
 
@@ -392,6 +392,7 @@
     top: 2rem;
     left: 50%;
     transform: translateX(-50%);
+    color: white;
   }
 
   .demo2-game__background{
