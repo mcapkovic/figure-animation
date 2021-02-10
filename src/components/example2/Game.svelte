@@ -13,13 +13,14 @@
 
   let isMoving = false;
   let aminationDirection = RIGHT;
-  let frames;
+  let frames = 0;
 
   // SELECT CVS
   let cvs;
   let ctx;
 
   // LOAD IMAGE
+  const heroImg = new Image();
   const layer_0000 = new Image();
   const layer_0001 = new Image();
   const layer_0002 = new Image();
@@ -32,6 +33,7 @@
   const layer_0009 = new Image();
   const layer_0010 = new Image();
 
+  heroImg.src = "/img/adventurer-v1.5-Sheet-3x.png";
   layer_0000.src = "/img/background_layers/Layer_0000_9.png";
   layer_0001.src = "/img/background_layers/Layer_0001_8.png";
   layer_0002.src = "/img/background_layers/Layer_0002_7.png";
@@ -129,14 +131,62 @@
     },
   };
 
+  const hero = {
+    dX: 50,
+    // dY: 688,
+    dY: 650,
+    w: 50 * 3,
+    h: 37 * 3,
+
+    animations: {
+      [IDLE]: [
+        { sX: 0, sY: 0 },
+        { sX: 0, sY: 0 },
+      ],
+    },
+
+    getAnimationFrames: function (type) {
+      const { w } = this;
+      console.log("width", w);
+      const animations = {
+        [IDLE]: [
+          { sX: 0, sY: 0 },
+          { sX: w, sY: 0 },
+          { sX: w * 2, sY: 0 },
+          { sX: w * 3, sY: 0 },
+        ],
+      };
+      return animations[type];
+    },
+
+    frame: 0,
+
+    period: 15,
+
+    draw: function () {
+      let animation = this.getAnimationFrames(IDLE);
+      let animationFrame = animation[this.frame % animation.length];
+      // let animationFrame = this.getAnimationFrames(IDLE)[2];
+
+      const { w, h, dX, dY } = this;
+      const { sX, sY } = animationFrame;
+      ctx.drawImage(heroImg, sX, sY, w, h, dX, dY, w, h);
+
+      // ctx.drawImage(sprite, bird.sX, bird.sY, this.w, this.h,- this.w/2, - this.h/2, this.w, this.h);
+    },
+
+    update: function () {
+      this.frame += frames % this.period == 0 ? 1 : 0;
+    },
+  };
   // DRAW
   function draw() {
     ctx.fillStyle = "#7693b3";
     ctx.fillRect(0, 0, cvs.width, cvs.height);
-    // bg.draw();
+    bg.draw();
     // pipes.draw();
     fg.draw();
-    // bird.draw();
+    hero.draw();
     // getReady.draw();
     // gameOver.draw();
     // score.draw();
@@ -144,7 +194,7 @@
 
   // UPDATE
   function update() {
-    // bird.update();
+    hero.update();
     fg.update();
     // pipes.update();
   }
@@ -154,7 +204,7 @@
     update();
     draw();
     frames++;
-    console.log(frames);
+    // console.log(frames);
     requestAnimationFrame(loop);
   }
 
@@ -171,6 +221,7 @@
   });
 
   function handleKeydown(event) {
+    event.preventDefault();
     // key = event.key;
     // keyCode = event.keyCode;
 
