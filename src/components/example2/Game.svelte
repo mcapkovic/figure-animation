@@ -20,7 +20,7 @@
   const layer_0009 = new Image();
   const layer_0010 = new Image();
 
-  layer_0000.src = "/img/background_layers/Layer_0000_9.png"
+  layer_0000.src = "/img/background_layers/Layer_0000_9.png";
   layer_0001.src = "/img/background_layers/Layer_0001_8.png";
   layer_0002.src = "/img/background_layers/Layer_0002_7.png";
   layer_0003.src = "/img/background_layers/Layer_0003_6.png";
@@ -32,26 +32,34 @@
   layer_0009.src = "/img/background_layers/Layer_0009_2.png";
   layer_0010.src = "/img/background_layers/Layer_0010_1.png";
 
-
   // BACKGROUND
-const bg = {
-    sX : 0,
-    sY : 0,
-    w : 928,
-    h : 793,
-    x : 0,
-    y :  0,
-    
-    draw : function(){
-        // console.log(ctx)
-        // ctx.drawImage(layer_0009, 0, 0);
+  const bg = {
+    sX: 0,
+    sY: 0,
+    w: 928,
+    h: 793,
+    x: 0,
+    y: 0,
 
-        // ctx.drawImage(layer_0009, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
-        
-        // ctx.drawImage(layer_0009, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
-    }
-    
-}
+    draw: function () {
+      // console.log(ctx)
+      ctx.drawImage(layer_0009, 0, 0);
+
+    //   ctx.drawImage(
+    //     layer_0009,
+    //     this.sX,
+    //     this.sY,
+    //     this.w,
+    //     this.h,
+    //     this.x,
+    //     this.y,
+    //     this.w,
+    //     this.h
+    //   );
+
+      // ctx.drawImage(layer_0009, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
+    },
+  };
 
   // DRAW
   function draw() {
@@ -84,19 +92,27 @@ const bg = {
 
   onMount(() => {
     cvs = document.querySelector("#game-canvas");
+    cvs.width = window.innerWidth;
+    cvs.height = window.innerHeight;
     ctx = cvs.getContext("2d");
+    // console.log( cvs.width)
+    // console.log( cvs.height)
 
-    console.log(layer_0006);
+    // console.log(layer_0006);
     loop();
   });
 </script>
 
-<canvas id="game-canvas" class="game" />
+<canvas id="game-canvas" class="game" height="793" width="928" />
 
 <style>
+  /* #game-canvas{
+        height: 600;
+    } */
   .game {
-    height: 793px;
-    width: 90%;
+    /* height: 793px; */
+    /* height: 500px;
+    width: 500px; */
     border: 1px solid red;
     /* margin: 1rem; */
   }
