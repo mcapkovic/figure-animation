@@ -1,6 +1,18 @@
 <script>
   import { onMount } from "svelte";
 
+  const IDLE = "idle";
+  const IDLE2 = "idle2";
+  const SLIDE = "slide";
+  const RUN = "run";
+  const CROUCH = "crouch";
+  const ATTACK = "attack";
+  const JUMP = "jump";
+  const RIGHT = "right";
+  const LEFT = "left";
+
+  let isMoving = false;
+  let aminationDirection = RIGHT;
   let frames;
 
   // SELECT CVS
@@ -38,26 +50,82 @@
     sY: 0,
     w: 928,
     h: 793,
-    x: 0,
-    y: 0,
+    dx: 0,
+    dy: 0,
 
     draw: function () {
       // console.log(ctx)
-      ctx.drawImage(layer_0009, 0, 0);
+      ctx.drawImage(layer_0009, 0, cvs.height - 793);
+      ctx.drawImage(
+        layer_0009,
+        this.sX,
+        this.sY,
+        this.w,
+        this.h,
+        this.dx + this.w,
+        cvs.height - 793,
+        this.w,
+        this.h
+      );
+    },
+  };
 
-    //   ctx.drawImage(
-    //     layer_0009,
-    //     this.sX,
-    //     this.sY,
-    //     this.w,
-    //     this.h,
-    //     this.x,
-    //     this.y,
-    //     this.w,
-    //     this.h
-    //   );
+  const foregroundLayers = [
+    { img: layer_0008, xName: "dx8", increment: 1 },
+    { img: layer_0007, xName: "dx7", increment: 1 },
+    { img: layer_0006, xName: "dx6", increment: 2 },
+    { img: layer_0005, xName: "dx5", increment: 3 },
+    { img: layer_0004, xName: "dx4", increment: 3 },
+    { img: layer_0003, xName: "dx3", increment: 4 },
+    { img: layer_0002, xName: "dx2", increment: 4 },
+    { img: layer_0001, xName: "dx1", increment: 4 },
+    { img: layer_0000, xName: "dx0", increment: 5 },
+  ];
 
-      // ctx.drawImage(layer_0009, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
+  // FOREGROUND
+  const fg = {
+    sX: 0,
+    sY: 0,
+    w: 928,
+    h: 793,
+    dx: 0,
+    dy: 0,
+
+    dx8: 0,
+    dx7: 0,
+    dx6: 0,
+    dx5: 0,
+    dx4: 0,
+    dx3: 0,
+    dx2: 0,
+    dx1: 0,
+    dx0: 0,
+
+    draw: function () {
+      if (this.dy === 0) this.dy = cvs.height - 793;
+
+      foregroundLayers.forEach((layer) => {
+        ctx.drawImage(layer.img, this[layer.xName] - 2 * this.w, this.dy);
+        ctx.drawImage(layer.img, this[layer.xName] - this.w, this.dy);
+        ctx.drawImage(layer.img, this[layer.xName], this.dy);
+        ctx.drawImage(layer.img, this[layer.xName] + this.w, this.dy);
+        ctx.drawImage(layer.img, this[layer.xName] + 2 * this.w, this.dy);
+      });
+    },
+
+    update: function () {
+      //   if(state.current == state.game){
+      //       this.x = (this.x - this.dx)%(this.w/2);
+      //   }
+      //   this.dx = (this.dx - 5) % this.w;
+
+      if (isMoving)
+        foregroundLayers.forEach((layer) => {
+          this[layer.xName] =
+            aminationDirection === RIGHT
+              ? (this[layer.xName] - layer.increment) % this.w
+              : (this[layer.xName] + layer.increment) % this.w;
+        });
     },
   };
 
@@ -65,9 +133,9 @@
   function draw() {
     ctx.fillStyle = "#7693b3";
     ctx.fillRect(0, 0, cvs.width, cvs.height);
-    bg.draw();
+    // bg.draw();
     // pipes.draw();
-    // fg.draw();
+    fg.draw();
     // bird.draw();
     // getReady.draw();
     // gameOver.draw();
@@ -77,7 +145,7 @@
   // UPDATE
   function update() {
     // bird.update();
-    // fg.update();
+    fg.update();
     // pipes.update();
   }
 
@@ -86,7 +154,7 @@
     update();
     draw();
     frames++;
-    // console.log(frames)
+    console.log(frames);
     requestAnimationFrame(loop);
   }
 
@@ -101,9 +169,57 @@
     // console.log(layer_0006);
     loop();
   });
+
+  function handleKeydown(event) {
+    // key = event.key;
+    // keyCode = event.keyCode;
+
+    if (event.keyCode === 39) {
+      aminationDirection = RIGHT;
+      isMoving = true;
+      //   animationChange(RUN);
+      //   if (!moveBackroungID) moveBackroungID = requestAnimationFrame(moveX);
+      // moveX()
+    } else if (event.keyCode === 37) {
+      // cancelAnimationFrame(moveBackroungID);
+      // moveBackroungID=null;
+      //   if (!moveBackroungID) moveBackroungID = requestAnimationFrame(moveX);
+
+      aminationDirection = LEFT;
+      isMoving = true;
+
+      //   animationChange(RUN);
+    }
+    // else if(event.keyCode === 38){
+    //     animationJump(JUMP)
+    // }else if(event.keyCode === 40){
+    //     animationDown()
+    // }else if(event.keyCode === 32){
+    //     animationAttack(ATTACK)
+    // }
+  }
+
+  function handleKeyup(event) {
+    // console.log(event)
+    if (event.keyCode === 39 && aminationDirection === "right") {
+      isMoving = false;
+    } else if (event.keyCode === 37 && aminationDirection === "left") {
+      isMoving = false;
+    }
+    // else if(event.keyCode === 40){
+    //     animationChange(IDLE)
+    // }
+  }
 </script>
 
-<canvas id="game-canvas" class="game" height="793" width="928" />
+<svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
+
+<div>
+  <canvas id="game-canvas" class="game" height="793" width="928" />
+  <button on:click={() => (isMoving = !isMoving)}>
+    {isMoving ? "stop" : "run"}</button
+  >
+</div>
 
 <style>
   /* #game-canvas{
@@ -113,7 +229,7 @@
     /* height: 793px; */
     /* height: 500px;
     width: 500px; */
-    border: 1px solid red;
+    /* border: 1px solid red; */
     /* margin: 1rem; */
   }
 </style>
