@@ -1,8 +1,8 @@
 <script>
   //   export let name;
-  import Demo from "./components/Demo.svelte";
-  import Demo2 from "./components/Demo2.svelte";
-  import Demo3 from "./components/Demo3.svelte";
+  import Demo from "./components/example1/Demo.svelte";
+  import Demo2 from "./components/example1/Demo2.svelte";
+  import Demo3 from "./components/example1/Demo3.svelte";
 
   let activeDemo = 2;
 </script>
