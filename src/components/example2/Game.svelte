@@ -217,7 +217,7 @@
       //   console.log(this.frame)
       if (
         this.frame === this.animation.length - 1 &&
-        (heroAminationType === JUMP || heroAminationType === SLIDE)
+        (heroAminationType !== RUN && heroAminationType !== IDLE)
       )
         heroAminationType = IDLE;
 
@@ -229,14 +229,14 @@
       this.animation = getHeroAnimation(heroAminationType, hero.w, hero.h);
 
       switch (heroAminationType) {
-        case RUN:
-          this.period = 8;
-          break;
-        case JUMP:
-          this.period = 8;
-          break;
-        default:
+        case IDLE:
           this.period = 15;
+          break;
+        // case JUMP:
+        //   this.period = 8;
+        //   break;
+        default:
+          this.period = 8;
           break;
       }
 
@@ -343,11 +343,27 @@
   <canvas id="game-canvas" class="game" height="793" width="928" />
   <button
     on:click={() => {
-      //   isMoving = heroAminationType === IDLE;
+      isMoving = heroAminationType === IDLE;
       changeHeroAnimation(heroAminationType === IDLE ? RUN : IDLE);
     }}
   >
-    {isMoving ? "stop" : "run"}
+    {isMoving ? "stop" : "start"}
+  </button>
+
+  <button
+    on:click={() => {
+      changeHeroAnimation(RUN);
+    }}
+  >
+    {RUN}
+  </button>
+
+  <button
+    on:click={() => {
+      changeHeroAnimation(IDLE);
+    }}
+  >
+    {IDLE}
   </button>
 
   <button
@@ -375,28 +391,28 @@
   </button>
 
   <button
-  on:click={() => {
-    changeHeroAnimation(ATTACK_2);
-  }}
->
-  {ATTACK_2}
-</button>
+    on:click={() => {
+      changeHeroAnimation(ATTACK_2);
+    }}
+  >
+    {ATTACK_2}
+  </button>
 
-<button
-on:click={() => {
-  changeHeroAnimation(ATTACK_3);
-}}
->
-{ATTACK_3}
-</button>
+  <button
+    on:click={() => {
+      changeHeroAnimation(ATTACK_3);
+    }}
+  >
+    {ATTACK_3}
+  </button>
 
-<button
-on:click={() => {
-  changeHeroAnimation(ATTACK_4);
-}}
->
-{ATTACK_4}
-</button>
+  <button
+    on:click={() => {
+      changeHeroAnimation(ATTACK_4);
+    }}
+  >
+    {ATTACK_4}
+  </button>
 </div>
 
 <style>
