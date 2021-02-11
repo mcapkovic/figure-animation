@@ -13,6 +13,7 @@
 
   let isMoving = false;
   let aminationDirection = RIGHT;
+  let heroAminationType = IDLE;
   let frames = 0;
 
   // SELECT CVS
@@ -133,27 +134,26 @@
 
   const hero = {
     dX: 50,
-    // dY: 688,
     dY: 650,
     w: 50 * 3,
     h: 37 * 3,
 
-    animations: {
-      [IDLE]: [
-        { sX: 0, sY: 0 },
-        { sX: 0, sY: 0 },
-      ],
-    },
-
     getAnimationFrames: function (type) {
-      const { w } = this;
-      console.log("width", w);
+      const { w, h } = this;
       const animations = {
         [IDLE]: [
           { sX: 0, sY: 0 },
           { sX: w, sY: 0 },
           { sX: w * 2, sY: 0 },
           { sX: w * 3, sY: 0 },
+        ],
+        [RUN]: [
+          { sX: w, sY: h },
+          { sX: w * 2, sY: h },
+          { sX: w * 3, sY: h },
+          { sX: w * 4, sY: h },
+          { sX: w * 5, sY: h },
+          { sX: w * 6, sY: h },
         ],
       };
       return animations[type];
@@ -164,19 +164,47 @@
     period: 15,
 
     draw: function () {
-      let animation = this.getAnimationFrames(IDLE);
-      let animationFrame = animation[this.frame % animation.length];
+      //   let animationFrame = animation[this.frame % animation.length];
+      let animationFrame = this.animation[this.frame];
       // let animationFrame = this.getAnimationFrames(IDLE)[2];
 
       const { w, h, dX, dY } = this;
       const { sX, sY } = animationFrame;
-      ctx.drawImage(heroImg, sX, sY, w, h, dX, dY, w, h);
+
+      ctx.save();
+      if (aminationDirection === LEFT) {
+        ctx.translate(this.dX, this.dY);
+
+        ctx.scale(-1, 1);
+
+        // ctx.rotate(1)
+        ctx.drawImage(heroImg, sX, sY, w, h, -this.w, 0, w, h);
+      } else {
+        ctx.drawImage(heroImg, sX, sY, w, h, dX, dY, w, h);
+      }
+
+      //   ctx.drawImage(heroImg, 0,0);
+
+      ctx.restore();
 
       // ctx.drawImage(sprite, bird.sX, bird.sY, this.w, this.h,- this.w/2, - this.h/2, this.w, this.h);
     },
 
     update: function () {
+      this.animation = this.getAnimationFrames(heroAminationType);
+
+      switch (heroAminationType) {
+        case RUN:
+          this.period = 8;
+          break;
+        default:
+          this.period = 15;
+          break;
+      }
+
+      //   console.log(heroAminationType)
       this.frame += frames % this.period == 0 ? 1 : 0;
+      this.frame = this.frame % this.animation.length;
     },
   };
   // DRAW
@@ -228,6 +256,7 @@
     if (event.keyCode === 39) {
       aminationDirection = RIGHT;
       isMoving = true;
+      heroAminationType = RUN;
       //   animationChange(RUN);
       //   if (!moveBackroungID) moveBackroungID = requestAnimationFrame(moveX);
       // moveX()
@@ -235,7 +264,7 @@
       // cancelAnimationFrame(moveBackroungID);
       // moveBackroungID=null;
       //   if (!moveBackroungID) moveBackroungID = requestAnimationFrame(moveX);
-
+      heroAminationType = RUN;
       aminationDirection = LEFT;
       isMoving = true;
 
@@ -254,8 +283,10 @@
     // console.log(event)
     if (event.keyCode === 39 && aminationDirection === "right") {
       isMoving = false;
+      heroAminationType = IDLE;
     } else if (event.keyCode === 37 && aminationDirection === "left") {
       isMoving = false;
+      heroAminationType = IDLE;
     }
     // else if(event.keyCode === 40){
     //     animationChange(IDLE)
@@ -267,7 +298,12 @@
 
 <div>
   <canvas id="game-canvas" class="game" height="793" width="928" />
-  <button on:click={() => (isMoving = !isMoving)}>
+  <button
+    on:click={() => {
+      isMoving = !isMoving;
+      heroAminationType = heroAminationType === IDLE ? RUN : IDLE;
+    }}
+  >
     {isMoving ? "stop" : "run"}</button
   >
 </div>
