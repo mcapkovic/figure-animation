@@ -1,15 +1,20 @@
 <script>
   import { onMount } from "svelte";
-
-  const IDLE = "idle";
-  const IDLE2 = "idle2";
-  const SLIDE = "slide";
-  const RUN = "run";
-  const CROUCH = "crouch";
-  const ATTACK = "attack";
-  const JUMP = "jump";
-  const RIGHT = "right";
-  const LEFT = "left";
+  import { getHeroAnimation } from "./animations";
+  import {
+    IDLE,
+    IDLE2,
+    SLIDE,
+    RUN,
+    CROUCH,
+    ATTACK,
+    ATTACK_2,
+    ATTACK_3,
+    ATTACK_4,
+    JUMP,
+    RIGHT,
+    LEFT,
+  } from "./constants";
 
   let isMoving = false;
   let aminationDirection = RIGHT;
@@ -155,6 +160,28 @@
           { sX: w * 5, sY: h },
           { sX: w * 6, sY: h },
         ],
+        [JUMP]: [
+          { sX: 0, sY: h * 2 },
+          { sX: w, sY: h * 2 },
+          { sX: w * 2, sY: h * 2 },
+          { sX: w * 3, sY: h * 2 },
+          { sX: w * 4, sY: h * 2 },
+          { sX: w * 5, sY: h * 2 },
+          { sX: w * 6, sY: h * 2 },
+          { sX: 0, sY: h * 3 },
+          { sX: w, sY: h * 3 },
+          { sX: w * 2, sY: h * 3 },
+          { sX: 0, sY: h * 2 },
+          { sX: w, sY: h * 2 },
+        ],
+
+        [SLIDE]: [
+          { sX: w * 3, sY: h * 3 },
+          { sX: w * 4, sY: h * 3 },
+          { sX: w * 5, sY: h * 3 },
+          { sX: w * 6, sY: h * 3 },
+          { sX: 0, sY: h * 4 },
+        ],
       };
       return animations[type];
     },
@@ -187,14 +214,25 @@
 
       ctx.restore();
 
+      //   console.log(this.frame)
+      if (
+        this.frame === this.animation.length - 1 &&
+        (heroAminationType === JUMP || heroAminationType === SLIDE)
+      )
+        heroAminationType = IDLE;
+
       // ctx.drawImage(sprite, bird.sX, bird.sY, this.w, this.h,- this.w/2, - this.h/2, this.w, this.h);
     },
 
     update: function () {
-      this.animation = this.getAnimationFrames(heroAminationType);
+      //   this.animation = this.getAnimationFrames(heroAminationType);
+      this.animation = getHeroAnimation(heroAminationType, hero.w, hero.h);
 
       switch (heroAminationType) {
         case RUN:
+          this.period = 8;
+          break;
+        case JUMP:
           this.period = 8;
           break;
         default:
@@ -292,6 +330,11 @@
     //     animationChange(IDLE)
     // }
   }
+
+  function changeHeroAnimation(type) {
+    hero.frame = 0;
+    heroAminationType = type;
+  }
 </script>
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
@@ -300,12 +343,60 @@
   <canvas id="game-canvas" class="game" height="793" width="928" />
   <button
     on:click={() => {
-      isMoving = !isMoving;
-      heroAminationType = heroAminationType === IDLE ? RUN : IDLE;
+      //   isMoving = heroAminationType === IDLE;
+      changeHeroAnimation(heroAminationType === IDLE ? RUN : IDLE);
     }}
   >
-    {isMoving ? "stop" : "run"}</button
+    {isMoving ? "stop" : "run"}
+  </button>
+
+  <button
+    on:click={() => {
+      changeHeroAnimation(JUMP);
+    }}
   >
+    jump
+  </button>
+
+  <button
+    on:click={() => {
+      changeHeroAnimation(SLIDE);
+    }}
+  >
+    slide
+  </button>
+
+  <button
+    on:click={() => {
+      changeHeroAnimation(ATTACK);
+    }}
+  >
+    attack
+  </button>
+
+  <button
+  on:click={() => {
+    changeHeroAnimation(ATTACK_2);
+  }}
+>
+  {ATTACK_2}
+</button>
+
+<button
+on:click={() => {
+  changeHeroAnimation(ATTACK_3);
+}}
+>
+{ATTACK_3}
+</button>
+
+<button
+on:click={() => {
+  changeHeroAnimation(ATTACK_4);
+}}
+>
+{ATTACK_4}
+</button>
 </div>
 
 <style>
