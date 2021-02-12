@@ -3,7 +3,7 @@
   import { getHeroAnimation } from "./animations";
   import {
     IDLE,
-    IDLE2,
+    IDLE_2,
     SLIDE,
     RUN,
     CROUCH,
@@ -11,6 +11,8 @@
     ATTACK_2,
     ATTACK_3,
     ATTACK_4,
+    ATTACK_5,
+    ATTACK_6,
     JUMP,
     RIGHT,
     LEFT,
@@ -217,7 +219,10 @@
       //   console.log(this.frame)
       if (
         this.frame === this.animation.length - 1 &&
-        (heroAminationType !== RUN && heroAminationType !== IDLE)
+        heroAminationType !== RUN &&
+        heroAminationType !== IDLE &&
+        heroAminationType !== IDLE_2 &&
+        heroAminationType !== CROUCH
       )
         heroAminationType = IDLE;
 
@@ -232,9 +237,12 @@
         case IDLE:
           this.period = 15;
           break;
-        // case JUMP:
-        //   this.period = 8;
-        //   break;
+          case CROUCH:
+          this.period = 15;
+          break;
+          case IDLE_2:
+          this.period = 15;
+          break;
         default:
           this.period = 8;
           break;
@@ -367,6 +375,14 @@
   </button>
 
   <button
+  on:click={() => {
+    changeHeroAnimation(IDLE_2);
+  }}
+>
+  {IDLE_2}
+</button>
+
+  <button
     on:click={() => {
       changeHeroAnimation(JUMP);
     }}
@@ -413,6 +429,22 @@
   >
     {ATTACK_4}
   </button>
+
+  <button
+    on:click={() => {
+      changeHeroAnimation(ATTACK_5);
+    }}
+  >
+    {ATTACK_5}
+  </button>
+
+  <button
+  on:click={() => {
+    changeHeroAnimation(CROUCH);
+  }}
+>
+  {CROUCH}
+</button>
 </div>
 
 <style>

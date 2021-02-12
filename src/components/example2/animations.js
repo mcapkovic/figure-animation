@@ -1,6 +1,6 @@
 import {
   IDLE,
-  IDLE2,
+  IDLE_2,
   SLIDE,
   RUN,
   CROUCH,
@@ -8,6 +8,8 @@ import {
   ATTACK_2,
   ATTACK_3,
   ATTACK_4,
+  ATTACK_5,
+  ATTACK_6,
   JUMP,
   RIGHT,
   LEFT,
@@ -20,6 +22,12 @@ export function getHeroAnimation(type, w, h) {
       { sX: w, sY: 0 },
       { sX: w * 2, sY: 0 },
       { sX: w * 3, sY: 0 },
+    ],
+    [IDLE_2]: [
+      { sX: w * 3, sY: h * 5 },
+      { sX: w * 4, sY: h * 5 },
+      { sX: w * 5, sY: h * 5 },
+      { sX: w * 6, sY: h * 5 },
     ],
     [RUN]: [
       { sX: w, sY: h },
@@ -58,18 +66,31 @@ export function getHeroAnimation(type, w, h) {
       { sX: w * 4, sY: h * 6 },
       { sX: w * 5, sY: h * 6 },
       { sX: w * 6, sY: h * 6 },
+      // { sX: 0, sY: h * 7 },
+      // { sX: w, sY: h * 7 },
+      // { sX: w * 2, sY: h * 7 },
+      // { sX: w * 3, sY: h * 7 },
+    ],
+    [ATTACK_2]: [
+      // { sX: 0, sY: h * 6 },
+      // { sX: w, sY: h * 6 },
+      // { sX: w * 2, sY: h * 6 },
+      // { sX: w * 3, sY: h * 6 },
+      // { sX: w * 4, sY: h * 6 },
+      // { sX: w * 5, sY: h * 6 },
+      { sX: w * 6, sY: h * 6 },
       { sX: 0, sY: h * 7 },
       { sX: w, sY: h * 7 },
       { sX: w * 2, sY: h * 7 },
       { sX: w * 3, sY: h * 7 },
     ],
-    [ATTACK_2]: [
+    [ATTACK_3]: [
       { sX: w * 6, sY: h * 7 },
       { sX: 0, sY: h * 8 },
       { sX: w, sY: h * 8 },
       { sX: w * 2, sY: h * 8 },
     ],
-    [ATTACK_3]: [
+    [ATTACK_4]: [
       { sX: w * 2, sY: h * 13 },
       { sX: w * 3, sY: h * 13 },
       { sX: w * 4, sY: h * 13 },
@@ -78,16 +99,23 @@ export function getHeroAnimation(type, w, h) {
       { sX: 0, sY: h * 14 },
       { sX: w, sY: h * 14 },
     ],
-    [ATTACK_4]: [
+    [ATTACK_5]: [
       { sX: w * 2, sY: h * 14 },
       { sX: w * 3, sY: h * 14 },
       { sX: w * 4, sY: h * 14 },
       { sX: w * 5, sY: h * 14 },
       { sX: w * 6, sY: h * 14 },
       { sX: 0, sY: h * 15 },
-      { sX: w, sY: h * 15},
+      { sX: w, sY: h * 15 },
       { sX: w * 2, sY: h * 15 },
-      { sX: w * 3, sY: h * 15},
+      { sX: w * 3, sY: h * 15 },
+    ],
+
+    [CROUCH]: [
+      { sX: w * 4, sY: 0 },
+      { sX: w * 5, sY: 0 },
+      { sX: w * 6, sY: 0 },
+      { sX: w * 0, sY: h },
     ],
   };
   return animations[type];

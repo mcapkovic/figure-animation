@@ -69,12 +69,13 @@
   <button on:click={() => animationDown()}>crouch/slide</button>
   <button on:click={changeDirection}>change direction</button>
   <div><a href="https://rvros.itch.io/animated-pixel-hero">hero source</a></div>
-  <!-- <div >
-      <img
-        src="/img/background.png"
-        alt="figure"
-      />
-    </div> -->
+  <div>
+    <a href="https://edermunizz.itch.io/free-pixel-art-forest?download"
+      >background</a
+    >
+  </div>
+
+
 </div>
 
 <style>

@@ -1,5 +1,5 @@
 export const IDLE = "idle";
-export const IDLE2 = "idle2";
+export const IDLE_2 = "idle2";
 export const SLIDE = "slide";
 export const RUN = "run";
 export const CROUCH = "crouch";
@@ -7,6 +7,8 @@ export const ATTACK = "attack";
 export const ATTACK_2 = "attack2";
 export const ATTACK_3 = "attack3";
 export const ATTACK_4 = "attack4";
+export const ATTACK_5 = "attack5";
+export const ATTACK_6 = "attack6";
 export const JUMP = "jump";
 export const RIGHT = "right";
 export const LEFT = "left";
