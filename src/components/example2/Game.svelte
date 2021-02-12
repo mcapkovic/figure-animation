@@ -22,6 +22,7 @@
   let aminationDirection = RIGHT;
   let heroAminationType = IDLE;
   let frames = 0;
+  let yOffset = 0;
 
   // SELECT CVS
   let cvs;
@@ -65,7 +66,7 @@
 
     draw: function () {
       // console.log(ctx)
-      ctx.drawImage(layer_0009, 0, cvs.height - 793);
+      ctx.drawImage(layer_0009, 0, yOffset);
       ctx.drawImage(
         layer_0009,
         this.sX,
@@ -73,7 +74,7 @@
         this.w,
         this.h,
         this.dx + this.w,
-        cvs.height - 793,
+        yOffset,
         this.w,
         this.h
       );
@@ -112,23 +113,27 @@
     dx0: 0,
 
     draw: function () {
-      if (this.dy === 0) this.dy = cvs.height - 793;
+      if (this.dy === 0) this.dy = yOffset;
 
       foregroundLayers.forEach((layer) => {
+        // ctx.save();
+        // if (
+        //   isMoving &&
+        //   layer.xName === "dx4" &&
+        //   Math.floor(Math.random() * 30) === 5
+        // )
+        //   ctx.globalAlpha = 0.8;
+
         ctx.drawImage(layer.img, this[layer.xName] - 2 * this.w, this.dy);
         ctx.drawImage(layer.img, this[layer.xName] - this.w, this.dy);
         ctx.drawImage(layer.img, this[layer.xName], this.dy);
         ctx.drawImage(layer.img, this[layer.xName] + this.w, this.dy);
         ctx.drawImage(layer.img, this[layer.xName] + 2 * this.w, this.dy);
+        // ctx.restore();
       });
     },
 
     update: function () {
-      //   if(state.current == state.game){
-      //       this.x = (this.x - this.dx)%(this.w/2);
-      //   }
-      //   this.dx = (this.dx - 5) % this.w;
-
       if (isMoving)
         foregroundLayers.forEach((layer) => {
           this[layer.xName] =
@@ -140,83 +145,47 @@
   };
 
   const hero = {
-    dX: 50,
-    dY: 650,
-    w: 50 * 3,
-    h: 37 * 3,
-
-    getAnimationFrames: function (type) {
-      const { w, h } = this;
-      const animations = {
-        [IDLE]: [
-          { sX: 0, sY: 0 },
-          { sX: w, sY: 0 },
-          { sX: w * 2, sY: 0 },
-          { sX: w * 3, sY: 0 },
-        ],
-        [RUN]: [
-          { sX: w, sY: h },
-          { sX: w * 2, sY: h },
-          { sX: w * 3, sY: h },
-          { sX: w * 4, sY: h },
-          { sX: w * 5, sY: h },
-          { sX: w * 6, sY: h },
-        ],
-        [JUMP]: [
-          { sX: 0, sY: h * 2 },
-          { sX: w, sY: h * 2 },
-          { sX: w * 2, sY: h * 2 },
-          { sX: w * 3, sY: h * 2 },
-          { sX: w * 4, sY: h * 2 },
-          { sX: w * 5, sY: h * 2 },
-          { sX: w * 6, sY: h * 2 },
-          { sX: 0, sY: h * 3 },
-          { sX: w, sY: h * 3 },
-          { sX: w * 2, sY: h * 3 },
-          { sX: 0, sY: h * 2 },
-          { sX: w, sY: h * 2 },
-        ],
-
-        [SLIDE]: [
-          { sX: w * 3, sY: h * 3 },
-          { sX: w * 4, sY: h * 3 },
-          { sX: w * 5, sY: h * 3 },
-          { sX: w * 6, sY: h * 3 },
-          { sX: 0, sY: h * 4 },
-        ],
-      };
-      return animations[type];
-    },
+    dX: 180, // hero position
+    dY: 677, // hero position
+    w: 50 * 3, // hero frame width
+    h: 37 * 3, // hero frame height
 
     frame: 0,
-
     period: 15,
 
     draw: function () {
-      //   let animationFrame = animation[this.frame % animation.length];
-      let animationFrame = this.animation[this.frame];
-      // let animationFrame = this.getAnimationFrames(IDLE)[2];
-
       const { w, h, dX, dY } = this;
-      const { sX, sY } = animationFrame;
+      const { sX, sY } = this.animation[this.frame];
 
-      ctx.save();
       if (aminationDirection === LEFT) {
-        ctx.translate(this.dX, this.dY);
-
+        ctx.save();
         ctx.scale(-1, 1);
-
-        // ctx.rotate(1)
-        ctx.drawImage(heroImg, sX, sY, w, h, -this.w, 0, w, h);
+        ctx.drawImage(
+          heroImg,
+          sX,
+          sY,
+          w,
+          h,
+          -dX - w / 2,
+          dY - h / 2 + yOffset,
+          w,
+          h
+        );
+        ctx.restore();
       } else {
-        ctx.drawImage(heroImg, sX, sY, w, h, dX, dY, w, h);
+        ctx.drawImage(
+          heroImg,
+          sX,
+          sY,
+          w,
+          h,
+          dX - w / 2,
+          dY - h / 2 + yOffset,
+          w,
+          h
+        ); // draw hero in the center of the location (dx,dy)
       }
 
-      //   ctx.drawImage(heroImg, 0,0);
-
-      ctx.restore();
-
-      //   console.log(this.frame)
       if (
         this.frame === this.animation.length - 1 &&
         heroAminationType !== RUN &&
@@ -225,22 +194,19 @@
         heroAminationType !== CROUCH
       )
         heroAminationType = IDLE;
-
-      // ctx.drawImage(sprite, bird.sX, bird.sY, this.w, this.h,- this.w/2, - this.h/2, this.w, this.h);
     },
 
     update: function () {
-      //   this.animation = this.getAnimationFrames(heroAminationType);
       this.animation = getHeroAnimation(heroAminationType, hero.w, hero.h);
 
       switch (heroAminationType) {
         case IDLE:
           this.period = 15;
           break;
-          case CROUCH:
+        case CROUCH:
           this.period = 15;
           break;
-          case IDLE_2:
+        case IDLE_2:
           this.period = 15;
           break;
         default:
@@ -257,6 +223,8 @@
   function draw() {
     ctx.fillStyle = "#7693b3";
     ctx.fillRect(0, 0, cvs.width, cvs.height);
+    ctx.fillStyle = "#0d1222";
+    ctx.fillRect(0, cvs.height / 2, cvs.width, cvs.height);
     bg.draw();
     // pipes.draw();
     fg.draw();
@@ -278,7 +246,6 @@
     update();
     draw();
     frames++;
-    // console.log(frames);
     requestAnimationFrame(loop);
   }
 
@@ -286,11 +253,8 @@
     cvs = document.querySelector("#game-canvas");
     cvs.width = window.innerWidth;
     cvs.height = window.innerHeight;
+    yOffset = (cvs.height - 793) / 2;
     ctx = cvs.getContext("2d");
-    // console.log( cvs.width)
-    // console.log( cvs.height)
-
-    // console.log(layer_0006);
     loop();
   });
 
@@ -375,12 +339,12 @@
   </button>
 
   <button
-  on:click={() => {
-    changeHeroAnimation(IDLE_2);
-  }}
->
-  {IDLE_2}
-</button>
+    on:click={() => {
+      changeHeroAnimation(IDLE_2);
+    }}
+  >
+    {IDLE_2}
+  </button>
 
   <button
     on:click={() => {
@@ -439,12 +403,12 @@
   </button>
 
   <button
-  on:click={() => {
-    changeHeroAnimation(CROUCH);
-  }}
->
-  {CROUCH}
-</button>
+    on:click={() => {
+      changeHeroAnimation(CROUCH);
+    }}
+  >
+    {CROUCH}
+  </button>
 </div>
 
 <style>
