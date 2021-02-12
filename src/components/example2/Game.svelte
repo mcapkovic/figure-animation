@@ -253,7 +253,7 @@
     cvs = document.querySelector("#game-canvas");
     cvs.width = window.innerWidth;
     cvs.height = window.innerHeight;
-    yOffset = (cvs.height - 793) / 2;
+    yOffset = cvs.height > 793? (cvs.height - 793) / 2: cvs.height - 793;
     ctx = cvs.getContext("2d");
     loop();
   });
