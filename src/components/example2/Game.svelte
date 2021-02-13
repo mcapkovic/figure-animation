@@ -426,10 +426,12 @@
     max-width: 100%;
     overflow: scroll;
     width: 100%;
-    justify-content: space-around;
-
-
   }
+
+  .buttons button {
+    margin-right: 2px;
+  }
+
   .game {
     /* height: 793px; */
     /* height: 500px;
