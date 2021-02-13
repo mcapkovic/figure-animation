@@ -83,5 +83,6 @@
     text-align: center;
     padding: 1em;
     margin: 0 auto;
+    background-color: #7693b3;
   }
 </style>

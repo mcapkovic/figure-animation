@@ -6,6 +6,7 @@
   import Demo4 from "./components/example2/Game.svelte";
 
   let activeDemo = 4;
+  let isExpanded = false;
 </script>
 
 <main>
@@ -20,10 +21,13 @@
   {/if}
 
   <div class="controls">
-    <button on:click={() => (activeDemo = 1)}>demo</button>
-    <button on:click={() => (activeDemo = 2)}>demo2</button>
-    <button on:click={() => (activeDemo = 3)}>demo3</button>
-    <button on:click={() => (activeDemo = 4)}>demo4</button>
+    <button class="menu" on:click={() => (isExpanded = !isExpanded)}>☰</button>
+    {#if isExpanded}
+      <button on:click={() => (activeDemo = 1)}>demo</button>
+      <button on:click={() => (activeDemo = 2)}>demo2</button>
+      <button on:click={() => (activeDemo = 3)}>demo3</button>
+      <button on:click={() => (activeDemo = 4)}>demo4</button>
+    {/if}
   </div>
 </main>
 
@@ -33,6 +37,12 @@
     /* padding: 1em;
     max-width: 240px; */
     margin: 0 auto;
+  }
+
+  .menu {
+    background: none;
+    color: #ffffff7d;
+    border: 1px solid #ffffff7d;
   }
 
   .controls {
