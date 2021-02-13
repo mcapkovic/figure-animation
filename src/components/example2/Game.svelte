@@ -332,10 +332,10 @@
         isMoving = heroAminationType === IDLE;
         // changeHeroAnimation(heroAminationType === IDLE ? RUN : IDLE);
         if(heroAminationType === IDLE){
-          playVideo()
+          // playVideo()
           changeHeroAnimation(RUN)
         }else{
-          stopVideo()
+          // stopVideo()
           changeHeroAnimation(IDLE)
         }
       }}
