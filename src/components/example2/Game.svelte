@@ -309,11 +309,11 @@
     heroAminationType = type;
   }
 
-  function playVideo(ev) {
+  function playVideo() {
     const video = document.querySelector("#video");
     video.src = "https://www.youtube.com/embed/EDRmJSwrVns?start=3&autoplay=1";
   }
-  function stopVideo(ev) {
+  function stopVideo() {
     const video = document.querySelector("#video");
     video.src = "";
   }
@@ -330,7 +330,14 @@
     <button
       on:click={() => {
         isMoving = heroAminationType === IDLE;
-        changeHeroAnimation(heroAminationType === IDLE ? RUN : IDLE);
+        // changeHeroAnimation(heroAminationType === IDLE ? RUN : IDLE);
+        if(heroAminationType === IDLE){
+          playVideo()
+          changeHeroAnimation(RUN)
+        }else{
+          stopVideo()
+          changeHeroAnimation(IDLE)
+        }
       }}
     >
       {isMoving ? "stop" : "start"}
