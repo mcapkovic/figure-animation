@@ -308,6 +308,15 @@
     hero.frame = 0;
     heroAminationType = type;
   }
+
+  function playVideo(ev) {
+    const video = document.querySelector("#video");
+    video.src = "https://www.youtube.com/embed/EDRmJSwrVns?start=3&autoplay=1";
+  }
+  function stopVideo(ev) {
+    const video = document.querySelector("#video");
+    video.src = "";
+  }
 </script>
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
@@ -316,6 +325,8 @@
   <canvas id="game-canvas" class="game" height="793" width="100" />
 
   <div class="buttons">
+    <button on:click={playVideo}> play music </button>
+    <button on:click={stopVideo}> stop music </button>
     <button
       on:click={() => {
         isMoving = heroAminationType === IDLE;
@@ -413,6 +424,17 @@
       {CROUCH}
     </button>
   </div>
+
+  <iframe
+    id='video'
+    style='display: none'
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/EDRmJSwrVns?start=3"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  />
 </div>
 
 <style>
