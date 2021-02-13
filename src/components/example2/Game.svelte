@@ -434,6 +434,7 @@
 
   <iframe
     id='video'
+    style='display: none'
     width="560"
     height="315"
     src="https://www.youtube.com/embed/EDRmJSwrVns?start=3"
