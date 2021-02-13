@@ -325,8 +325,8 @@
   <canvas id="game-canvas" class="game" height="793" width="100" />
 
   <div class="buttons">
-    <button on:click={playVideo}> play music </button>
-    <button on:click={stopVideo}> stop music </button>
+    <!-- <button on:click={playVideo}> play music </button>
+    <button on:click={stopVideo}> stop music </button> -->
     <button
       on:click={() => {
         isMoving = heroAminationType === IDLE;
@@ -434,9 +434,8 @@
 
   <iframe
     id='video'
-    style='display: none'
-    width="560"
-    height="315"
+    width="320"
+    height="240"
     src="https://www.youtube.com/embed/EDRmJSwrVns?start=3"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -449,8 +448,8 @@
     position: relative;
   }
   .buttons {
-    position: absolute;
-    bottom: 0;
+    /* position: absolute;
+    bottom: 0; */
     display: flex;
     max-width: 100%;
     overflow: scroll;
