@@ -252,8 +252,9 @@
   onMount(() => {
     cvs = document.querySelector("#game-canvas");
     cvs.width = window.innerWidth;
+    console.log(window.innerWidth);
     cvs.height = window.innerHeight;
-    yOffset = cvs.height > 793? (cvs.height - 793) / 2: cvs.height - 793;
+    yOffset = cvs.height > 793 ? (cvs.height - 793) / 2 : cvs.height - 793;
     ctx = cvs.getContext("2d");
     loop();
   });
@@ -311,110 +312,124 @@
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
 
-<div>
-  <canvas id="game-canvas" class="game" height="793" width="928" />
-  <button
-    on:click={() => {
-      isMoving = heroAminationType === IDLE;
-      changeHeroAnimation(heroAminationType === IDLE ? RUN : IDLE);
-    }}
-  >
-    {isMoving ? "stop" : "start"}
-  </button>
+<div class="game-wrapper">
+  <canvas id="game-canvas" class="game" height="793" width="100" />
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(RUN);
-    }}
-  >
-    {RUN}
-  </button>
+  <div class="buttons">
+    <button
+      on:click={() => {
+        isMoving = heroAminationType === IDLE;
+        changeHeroAnimation(heroAminationType === IDLE ? RUN : IDLE);
+      }}
+    >
+      {isMoving ? "stop" : "start"}
+    </button>
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(IDLE);
-    }}
-  >
-    {IDLE}
-  </button>
+    <button
+      on:click={() => {
+        changeHeroAnimation(RUN);
+      }}
+    >
+      {RUN}
+    </button>
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(IDLE_2);
-    }}
-  >
-    {IDLE_2}
-  </button>
+    <button
+      on:click={() => {
+        changeHeroAnimation(IDLE);
+      }}
+    >
+      {IDLE}
+    </button>
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(JUMP);
-    }}
-  >
-    jump
-  </button>
+    <button
+      on:click={() => {
+        changeHeroAnimation(IDLE_2);
+      }}
+    >
+      {IDLE_2}
+    </button>
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(SLIDE);
-    }}
-  >
-    slide
-  </button>
+    <button
+      on:click={() => {
+        changeHeroAnimation(JUMP);
+      }}
+    >
+      jump
+    </button>
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(ATTACK);
-    }}
-  >
-    attack
-  </button>
+    <button
+      on:click={() => {
+        changeHeroAnimation(SLIDE);
+      }}
+    >
+      slide
+    </button>
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(ATTACK_2);
-    }}
-  >
-    {ATTACK_2}
-  </button>
+    <button
+      on:click={() => {
+        changeHeroAnimation(ATTACK);
+      }}
+    >
+      attack
+    </button>
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(ATTACK_3);
-    }}
-  >
-    {ATTACK_3}
-  </button>
+    <button
+      on:click={() => {
+        changeHeroAnimation(ATTACK_2);
+      }}
+    >
+      {ATTACK_2}
+    </button>
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(ATTACK_4);
-    }}
-  >
-    {ATTACK_4}
-  </button>
+    <button
+      on:click={() => {
+        changeHeroAnimation(ATTACK_3);
+      }}
+    >
+      {ATTACK_3}
+    </button>
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(ATTACK_5);
-    }}
-  >
-    {ATTACK_5}
-  </button>
+    <button
+      on:click={() => {
+        changeHeroAnimation(ATTACK_4);
+      }}
+    >
+      {ATTACK_4}
+    </button>
 
-  <button
-    on:click={() => {
-      changeHeroAnimation(CROUCH);
-    }}
-  >
-    {CROUCH}
-  </button>
+    <button
+      on:click={() => {
+        changeHeroAnimation(ATTACK_5);
+      }}
+    >
+      {ATTACK_5}
+    </button>
+
+    <button
+      on:click={() => {
+        changeHeroAnimation(CROUCH);
+      }}
+    >
+      {CROUCH}
+    </button>
+  </div>
 </div>
 
 <style>
-  /* #game-canvas{
-        height: 600;
-    } */
+  .game-wrapper {
+    position: relative;
+  }
+  .buttons {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    max-width: 100%;
+    overflow: scroll;
+    width: 100%;
+    justify-content: space-around;
+
+
+  }
   .game {
     /* height: 793px; */
     /* height: 500px;

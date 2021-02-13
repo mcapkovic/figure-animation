@@ -9,7 +9,9 @@
 </script>
 
 <main>
-  {#if activeDemo === 2}
+  {#if activeDemo === 1}
+    <Demo />
+  {:else if activeDemo === 2}
     <Demo2 />
   {:else if activeDemo === 3}
     <Demo3 />
@@ -18,12 +20,11 @@
   {/if}
 
   <div class="controls">
+    <button on:click={() => (activeDemo = 1)}>demo</button>
     <button on:click={() => (activeDemo = 2)}>demo2</button>
     <button on:click={() => (activeDemo = 3)}>demo3</button>
     <button on:click={() => (activeDemo = 4)}>demo4</button>
   </div>
-
-  <Demo />
 </main>
 
 <style>
