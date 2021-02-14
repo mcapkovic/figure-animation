@@ -241,7 +241,7 @@
 
   onMount(() => {
     cvs = document.querySelector("#game-canvas");
-    cvs.width = window.innerWidth;
+    cvs.width = window.innerWidth - 18;
     cvs.height = window.innerHeight;
     yOffset = cvs.height > 793 ? (cvs.height - 793) / 2 : cvs.height - 793;
     ctx = cvs.getContext("2d");
@@ -398,13 +398,15 @@
 <style>
   .game-wrapper {
     position: relative;
+    text-align: left;
+    background: black;
   }
   .buttons {
     /* position: absolute;
     bottom: 0; */
     display: flex;
     max-width: 100%;
-    overflow: scroll;
+    overflow: auto;
     width: 100%;
   }
 

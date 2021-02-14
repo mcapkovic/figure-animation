@@ -47,7 +47,7 @@
             'autohide': 1,
             'wmode': 'opaque',
             'origin': window.location.origin,
-            'start': 5,
+            'start': 4,
             loop: 1,
         },
       });
