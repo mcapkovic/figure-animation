@@ -41,9 +41,12 @@
     transform: translateX(-50%);
   }
   .player-wrapper__video--visible{
-    opacity: 1;
+    /* opacity: 1; */
+    display: block;
   }
   .player-wrapper__video--hidden{
-    opacity: 0;
+    /* opacity: 0; */
+    display: none;
+
   }
 </style>
