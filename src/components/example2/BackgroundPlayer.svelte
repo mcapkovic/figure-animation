@@ -49,6 +49,7 @@
           (videoVisibility = videoVisibility === VISIBLE ? HIDDEN : VISIBLE)}
         >TOGGLE PLAYER</button
       >
+      {videoState}
     </div>
   {/if}
 
