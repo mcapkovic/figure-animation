@@ -1,6 +1,10 @@
 <script>
   import { onMount } from "svelte";
   import { getHeroAnimation } from "./animations";
+  import YouTube from "./YouTube.svelte";
+  import YouTube0 from "./YouTube0.svelte";
+  import BackgroundPlayer from "./BackgroundPlayer.svelte";
+
   import {
     IDLE,
     IDLE_2,
@@ -116,20 +120,11 @@
       if (this.dy === 0) this.dy = yOffset;
 
       foregroundLayers.forEach((layer) => {
-        // ctx.save();
-        // if (
-        //   isMoving &&
-        //   layer.xName === "dx4" &&
-        //   Math.floor(Math.random() * 30) === 5
-        // )
-        //   ctx.globalAlpha = 0.8;
-
         ctx.drawImage(layer.img, this[layer.xName] - 2 * this.w, this.dy);
         ctx.drawImage(layer.img, this[layer.xName] - this.w, this.dy);
         ctx.drawImage(layer.img, this[layer.xName], this.dy);
         ctx.drawImage(layer.img, this[layer.xName] + this.w, this.dy);
         ctx.drawImage(layer.img, this[layer.xName] + 2 * this.w, this.dy);
-        // ctx.restore();
       });
     },
 
@@ -226,19 +221,14 @@
     ctx.fillStyle = "#0d1222";
     ctx.fillRect(0, cvs.height / 2, cvs.width, cvs.height);
     bg.draw();
-    // pipes.draw();
     fg.draw();
     hero.draw();
-    // getReady.draw();
-    // gameOver.draw();
-    // score.draw();
   }
 
   // UPDATE
   function update() {
     hero.update();
     fg.update();
-    // pipes.update();
   }
 
   // LOOP
@@ -252,7 +242,6 @@
   onMount(() => {
     cvs = document.querySelector("#game-canvas");
     cvs.width = window.innerWidth;
-    console.log(window.innerWidth);
     cvs.height = window.innerHeight;
     yOffset = cvs.height > 793 ? (cvs.height - 793) / 2 : cvs.height - 793;
     ctx = cvs.getContext("2d");
@@ -261,37 +250,19 @@
 
   function handleKeydown(event) {
     event.preventDefault();
-    // key = event.key;
-    // keyCode = event.keyCode;
 
     if (event.keyCode === 39) {
       aminationDirection = RIGHT;
       isMoving = true;
       heroAminationType = RUN;
-      //   animationChange(RUN);
-      //   if (!moveBackroungID) moveBackroungID = requestAnimationFrame(moveX);
-      // moveX()
     } else if (event.keyCode === 37) {
-      // cancelAnimationFrame(moveBackroungID);
-      // moveBackroungID=null;
-      //   if (!moveBackroungID) moveBackroungID = requestAnimationFrame(moveX);
       heroAminationType = RUN;
       aminationDirection = LEFT;
       isMoving = true;
-
-      //   animationChange(RUN);
     }
-    // else if(event.keyCode === 38){
-    //     animationJump(JUMP)
-    // }else if(event.keyCode === 40){
-    //     animationDown()
-    // }else if(event.keyCode === 32){
-    //     animationAttack(ATTACK)
-    // }
   }
 
   function handleKeyup(event) {
-    // console.log(event)
     if (event.keyCode === 39 && aminationDirection === "right") {
       isMoving = false;
       heroAminationType = IDLE;
@@ -299,9 +270,6 @@
       isMoving = false;
       heroAminationType = IDLE;
     }
-    // else if(event.keyCode === 40){
-    //     animationChange(IDLE)
-    // }
   }
 
   function changeHeroAnimation(type) {
@@ -309,14 +277,6 @@
     heroAminationType = type;
   }
 
-  function playVideo() {
-    const video = document.querySelector("#video");
-    video.src = "https://www.youtube.com/embed/EDRmJSwrVns?start=3&autoplay=1";
-  }
-  function stopVideo() {
-    const video = document.querySelector("#video");
-    video.src = "";
-  }
 </script>
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
@@ -325,18 +285,16 @@
   <canvas id="game-canvas" class="game" height="793" width="100" />
 
   <div class="buttons">
-    <!-- <button on:click={playVideo}> play music </button>
-    <button on:click={stopVideo}> stop music </button> -->
     <button
       on:click={() => {
         isMoving = heroAminationType === IDLE;
         // changeHeroAnimation(heroAminationType === IDLE ? RUN : IDLE);
-        if(heroAminationType === IDLE){
+        if (heroAminationType === IDLE) {
           // playVideo()
-          changeHeroAnimation(RUN)
-        }else{
+          changeHeroAnimation(RUN);
+        } else {
           // stopVideo()
-          changeHeroAnimation(IDLE)
+          changeHeroAnimation(IDLE);
         }
       }}
     >
@@ -432,15 +390,9 @@
     </button>
   </div>
 
-  <iframe
-    id='video'
-    width="320"
-    height="240"
-    src="https://www.youtube.com/embed/EDRmJSwrVns?start=3"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  />
+  <hr />
+  <YouTube0 />
+  <div><BackgroundPlayer /></div>
 </div>
 
 <style>

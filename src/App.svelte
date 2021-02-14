@@ -3,7 +3,7 @@
   import Demo from "./components/example1/Demo.svelte";
   import Demo2 from "./components/example1/Demo2.svelte";
   import Demo3 from "./components/example1/Demo3.svelte";
-  import Demo4 from "./components/example2/Game.svelte";
+  import Demo4 from "./components/example2/Demo4.svelte";
 
   let activeDemo = 4;
   let isExpanded = false;
