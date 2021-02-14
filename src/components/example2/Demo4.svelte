@@ -244,6 +244,7 @@
     cvs.height = window.innerHeight;
     yOffset = cvs.height > 793 ? (cvs.height - 793) / 2 : cvs.height - 793;
     ctx = cvs.getContext("2d");
+    if (window.innerWidth < 500) hero.dX = 100;
     loop();
   });
 
@@ -399,7 +400,7 @@
     </button>
   </div>
 
-  <hr />
+  <br />
   <YouTube0 />
   <div><BackgroundPlayer {toggleDemo} /></div>
 </div>
@@ -408,7 +409,7 @@
   .game-wrapper {
     position: relative;
     text-align: left;
-    background: black;
+    background: #0d1222;
   }
   .buttons {
     /* position: absolute;

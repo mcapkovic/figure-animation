@@ -10,11 +10,17 @@
   let videoVisibility = HIDDEN;
   let videoState = -1;
   let isPlayerReady = false;
+  let isFirstPlay = true;
 
   function playVideo() {
     // player1.seekTo(4);
     player1.playVideo();
-    toggleDemo(false);
+    if(isFirstPlay){
+        setTimeout(function(){  toggleDemo(false); }, 2600);
+        isFirstPlay=false;
+    }else{
+        toggleDemo(false);
+    }
   }
 
   //   function stopVideo() {
