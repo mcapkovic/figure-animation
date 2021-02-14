@@ -116,14 +116,12 @@
     dx0: 0,
 
     draw: function () {
-      if (this.dy === 0) this.dy = yOffset;
-
       foregroundLayers.forEach((layer) => {
-        ctx.drawImage(layer.img, this[layer.xName] - 2 * this.w, this.dy);
-        ctx.drawImage(layer.img, this[layer.xName] - this.w, this.dy);
-        ctx.drawImage(layer.img, this[layer.xName], this.dy);
-        ctx.drawImage(layer.img, this[layer.xName] + this.w, this.dy);
-        ctx.drawImage(layer.img, this[layer.xName] + 2 * this.w, this.dy);
+        ctx.drawImage(layer.img, this[layer.xName] - 2 * this.w, yOffset);
+        ctx.drawImage(layer.img, this[layer.xName] - this.w, yOffset);
+        ctx.drawImage(layer.img, this[layer.xName], yOffset);
+        ctx.drawImage(layer.img, this[layer.xName] + this.w, yOffset);
+        ctx.drawImage(layer.img, this[layer.xName] + 2 * this.w, yOffset);
       });
     },
 
@@ -247,6 +245,15 @@
     if (window.innerWidth < 500) hero.dX = 100;
     loop();
   });
+
+  function onResize() {
+    cvs.width = window.innerWidth - 18;
+    cvs.height = window.innerHeight;
+    yOffset = cvs.height > 793 ? (cvs.height - 793) / 2 : cvs.height - 793;
+    if (window.innerWidth < 500) hero.dX = 100;
+  }
+
+  window.addEventListener("resize", onResize);
 
   function handleKeydown(event) {
     event.preventDefault();
