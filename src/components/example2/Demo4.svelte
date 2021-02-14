@@ -1,7 +1,6 @@
 <script>
   import { onMount } from "svelte";
   import { getHeroAnimation } from "./animations";
-  import YouTube from "./YouTube.svelte";
   import YouTube0 from "./YouTube0.svelte";
   import BackgroundPlayer from "./BackgroundPlayer.svelte";
 
@@ -277,6 +276,16 @@
     heroAminationType = type;
   }
 
+  function toggleDemo(isPlaying) {
+    hero.frame = 0;
+    if (isPlaying) {
+      heroAminationType = IDLE;
+      isMoving = false;
+    } else {
+      heroAminationType = RUN;
+      isMoving = true;
+    }
+  }
 </script>
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
@@ -392,7 +401,7 @@
 
   <hr />
   <YouTube0 />
-  <div><BackgroundPlayer /></div>
+  <div><BackgroundPlayer {toggleDemo} /></div>
 </div>
 
 <style>

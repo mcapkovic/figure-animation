@@ -38,17 +38,17 @@
         height,
         width,
         videoId: videoId,
-       
+
         events: {
-          //'onReady': onPlayerReady,
+          onReady: onPlayerReady,
           onStateChange: onPlayerStateChange,
         },
-            playerVars: {
-            'autohide': 1,
-            'wmode': 'opaque',
-            'origin': window.location.origin,
-            'start': 4,
-            loop: 1,
+        playerVars: {
+          autohide: 1,
+          wmode: "opaque",
+          origin: window.location.origin,
+          start: 4,
+          loop: 1,
         },
       });
     }
@@ -70,6 +70,10 @@
     dispatch("StateChange", data);
   }
 
+  function onPlayerReady(data) {
+    dispatch("PlayerReady", data);
+  }
+
   export function playVideo() {
     player.playVideo();
   }
@@ -85,8 +89,6 @@
   export function seekTo() {
     player.seekTo();
   }
-  
-
 </script>
 
 <div class="yt-component">

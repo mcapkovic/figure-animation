@@ -4,40 +4,48 @@
   const VISIBLE = "visible";
   const HIDDEN = "hidden";
 
+  export let toggleDemo;
+
   let player1;
   let videoVisibility = HIDDEN;
   let videoState = -1;
+  let isPlayerReady = false;
 
   function playVideo() {
     // player1.seekTo(4);
     player1.playVideo();
+    toggleDemo(false);
   }
 
-//   function stopVideo() {
-//     // player1.seekTo(4, false);
-//     player1.stopVideo();
-//   }
+  //   function stopVideo() {
+  //     // player1.seekTo(4, false);
+  //     player1.stopVideo();
+  //   }
 
   function pauseVideo() {
     player1.pauseVideo();
+    toggleDemo(true);
   }
 </script>
 
 <div class="player-wrapper">
-  <div class="player-wrapper__buttons">
-    {#if videoState === -1 || videoState === 2}
-      <button on:click={playVideo}>play</button>
-    {:else if videoState === 1}
-      <button on:click={pauseVideo}>pause</button>
-    {:else if videoState === 3}
-      <span>buffering</span>
-    {/if}
-    <button
-      on:click={() =>
-        (videoVisibility = videoVisibility === VISIBLE ? HIDDEN : VISIBLE)}
-      >toggle video</button
-    >
-  </div>
+  {#if isPlayerReady}
+    <div class="player-wrapper__buttons">
+      {#if videoState === -1 || videoState === 2}
+        <button on:click={playVideo}>PLAY</button>
+      {:else if videoState === 1}
+        <button on:click={pauseVideo}>PAUSE</button>
+      {:else if videoState === 3}
+        <span>BUFFERING</span>
+      {/if}
+      <button
+        on:click={() =>
+          (videoVisibility = videoVisibility === VISIBLE ? HIDDEN : VISIBLE)}
+        >TOGGLE PLAYER</button
+      >
+    </div>
+  {/if}
+
   <div
     class={`player-wrapper__video player-wrapper__video--${videoVisibility}`}
   >
@@ -45,6 +53,7 @@
       videoId="EDRmJSwrVns"
       bind:this={player1}
       on:StateChange={(e) => (videoState = e.detail)}
+      on:PlayerReady={() => (isPlayerReady = true)}
     />
   </div>
 </div>
