@@ -1,7 +1,7 @@
 <script>
   import YouTube from "./YouTube.svelte";
   import { debounce } from "../../utils";
-  
+
   const VISIBLE = "visible";
   const HIDDEN = "hidden";
 
@@ -20,7 +20,7 @@
       setTimeout(function () {
         toggleDemo(false);
         if (videoState === 2) player1.playVideo();
-      }, 1000);
+      }, 5000);
       isFirstPlay = false;
     } else {
       toggleDemo(false);
