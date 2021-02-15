@@ -1,6 +1,7 @@
 <script>
   import YouTube from "./YouTube.svelte";
   import { debounce } from "../../utils";
+  
   const VISIBLE = "visible";
   const HIDDEN = "hidden";
 
@@ -13,13 +14,13 @@
   let isFirstPlay = true;
 
   function playVideo() {
-    // player1.seekTo(4);
     player1.playVideo();
+
     if (isFirstPlay) {
       setTimeout(function () {
         toggleDemo(false);
         if (videoState === 2) player1.playVideo();
-      }, 2600);
+      }, 1000);
       isFirstPlay = false;
     } else {
       toggleDemo(false);
@@ -39,6 +40,14 @@
   const debouncedStateChange = debounce(function (e) {
     videoState = e.detail;
   }, 250);
+
+  function onPlayerReady() {
+    isPlayerReady = true;
+    player1.playVideo();
+    setTimeout(function () {
+      player1.pauseVideo();
+    }, 250);
+  }
 </script>
 
 <div class="player-wrapper">
@@ -68,7 +77,7 @@
       videoId="EDRmJSwrVns"
       bind:this={player1}
       on:StateChange={debouncedStateChange}
-      on:PlayerReady={() => (isPlayerReady = true)}
+      on:PlayerReady={onPlayerReady}
     />
   </div>
 </div>
