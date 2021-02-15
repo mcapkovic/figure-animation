@@ -24,8 +24,10 @@
   let isMoving = false;
   let aminationDirection = RIGHT;
   let heroAminationType = IDLE;
+  let defaultHeroAnimation = IDLE;
   let frames = 0;
   let yOffset = 0;
+  let lastPressedKey = -1;
 
   // SELECT CVS
   let cvs;
@@ -185,7 +187,7 @@
         heroAminationType !== IDLE_2 &&
         heroAminationType !== CROUCH
       )
-        heroAminationType = IDLE;
+        heroAminationType = defaultHeroAnimation;
     },
 
     update: function () {
@@ -257,16 +259,22 @@
 
   function handleKeydown(event) {
     event.preventDefault();
-
-    if (event.keyCode === 39) {
+    if (event.keyCode === 39 && event.keyCode !== lastPressedKey) {
       aminationDirection = RIGHT;
       isMoving = true;
-      heroAminationType = RUN;
-    } else if (event.keyCode === 37) {
-      heroAminationType = RUN;
+      changeHeroAnimation(RUN);
+    } else if (event.keyCode === 37 && event.keyCode !== lastPressedKey) {
       aminationDirection = LEFT;
       isMoving = true;
+      changeHeroAnimation(RUN);
+    } else if (event.keyCode === 40 && event.keyCode !== lastPressedKey) {
+      if (defaultHeroAnimation === RUN) {
+        changeHeroAnimation(SLIDE);
+      } else {
+        changeHeroAnimation(CROUCH);
+      }
     }
+    lastPressedKey = event.keyCode;
   }
 
   function handleKeyup(event) {
@@ -277,21 +285,29 @@
       isMoving = false;
       heroAminationType = IDLE;
     }
+
+    if (event.keyCode === lastPressedKey) lastPressedKey = -1;
   }
+
+  const defaultHeroAnimationsList = [IDLE, IDLE_2, RUN];
 
   function changeHeroAnimation(type) {
     hero.frame = 0;
+    if (defaultHeroAnimationsList.includes(type)) defaultHeroAnimation = type;
     heroAminationType = type;
   }
 
   function toggleDemo(isPlaying) {
     hero.frame = 0;
     if (isPlaying) {
-      heroAminationType = IDLE;
+      // heroAminationType = IDLE;
       isMoving = false;
+      changeHeroAnimation(IDLE);
     } else {
-      heroAminationType = RUN;
+      // heroAminationType = RUN;
       isMoving = true;
+      changeHeroAnimation(RUN);
+
     }
   }
 </script>
