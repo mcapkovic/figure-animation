@@ -1,6 +1,6 @@
 <script>
   import YouTube from "./YouTube.svelte";
-    import {debounce} from '../../utils';
+  import { debounce } from "../../utils";
   const VISIBLE = "visible";
   const HIDDEN = "hidden";
 
@@ -15,11 +15,14 @@
   function playVideo() {
     // player1.seekTo(4);
     player1.playVideo();
-    if(isFirstPlay){
-        setTimeout(function(){  toggleDemo(false); }, 2600);
-        isFirstPlay=false;
-    }else{
+    if (isFirstPlay) {
+      setTimeout(function () {
         toggleDemo(false);
+        if (videoState === 2) player1.playVideo();
+      }, 2600);
+      isFirstPlay = false;
+    } else {
+      toggleDemo(false);
     }
   }
 
@@ -33,11 +36,9 @@
     toggleDemo(true);
   }
 
-
-  const debouncedStateChange = debounce(function(e) {
-    videoState = e.detail
-}, 500);
-
+  const debouncedStateChange = debounce(function (e) {
+    videoState = e.detail;
+  }, 250);
 </script>
 
 <div class="player-wrapper">
@@ -62,7 +63,7 @@
   <div
     class={`player-wrapper__video player-wrapper__video--${videoVisibility}`}
   >
-  <!-- on:StateChange={(e) => (videoState = e.detail)}   -->
+    <!-- on:StateChange={(e) => (videoState = e.detail)}   -->
     <YouTube
       videoId="EDRmJSwrVns"
       bind:this={player1}
