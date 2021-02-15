@@ -1,6 +1,6 @@
 <script>
   import YouTube from "./YouTube.svelte";
-
+    import {debounce} from '../../utils';
   const VISIBLE = "visible";
   const HIDDEN = "hidden";
 
@@ -32,6 +32,12 @@
     player1.pauseVideo();
     toggleDemo(true);
   }
+
+
+  const debouncedStateChange = debounce(function(e) {
+    videoState = e.detail
+}, 500);
+
 </script>
 
 <div class="player-wrapper">
@@ -56,10 +62,11 @@
   <div
     class={`player-wrapper__video player-wrapper__video--${videoVisibility}`}
   >
+  <!-- on:StateChange={(e) => (videoState = e.detail)}   -->
     <YouTube
       videoId="EDRmJSwrVns"
       bind:this={player1}
-      on:StateChange={(e) => (videoState = e.detail)}
+      on:StateChange={debouncedStateChange}
       on:PlayerReady={() => (isPlayerReady = true)}
     />
   </div>
