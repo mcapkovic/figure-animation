@@ -18,9 +18,9 @@
 
     if (isFirstPlay) {
       setTimeout(function () {
-        if (videoState === 2) player1.playVideo();
+        if (videoState === 2) return;
         toggleDemo(false);
-      }, 5000);
+      }, 1000);
       isFirstPlay = false;
     } else {
       toggleDemo(false);
