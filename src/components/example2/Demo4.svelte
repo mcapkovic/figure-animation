@@ -17,6 +17,7 @@
     ATTACK_5,
     ATTACK_6,
     JUMP,
+    JUMP_2,
     RIGHT,
     LEFT,
   } from "./constants";
@@ -258,6 +259,8 @@
   window.addEventListener("resize", onResize);
 
   function handleKeydown(event) {
+    // console.log(event.keyCode)
+
     event.preventDefault();
     if (event.keyCode === 39 && event.keyCode !== lastPressedKey) {
       aminationDirection = RIGHT;
@@ -273,6 +276,8 @@
       } else {
         changeHeroAnimation(CROUCH);
       }
+    }else if(event.keyCode === 38 && event.keyCode !== lastPressedKey){
+      changeHeroAnimation(JUMP_2);
     }
     lastPressedKey = event.keyCode;
   }
@@ -280,10 +285,10 @@
   function handleKeyup(event) {
     if (event.keyCode === 39 && aminationDirection === "right") {
       isMoving = false;
-      heroAminationType = IDLE;
+      changeHeroAnimation(IDLE)
     } else if (event.keyCode === 37 && aminationDirection === "left") {
       isMoving = false;
-      heroAminationType = IDLE;
+      changeHeroAnimation(IDLE)
     }
 
     if (event.keyCode === lastPressedKey) lastPressedKey = -1;

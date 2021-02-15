@@ -11,6 +11,7 @@ import {
   ATTACK_5,
   ATTACK_6,
   JUMP,
+  JUMP_2,
   RIGHT,
   LEFT,
 } from "./constants";
@@ -50,6 +51,20 @@ export function getHeroAnimation(type, w, h) {
       { sX: w * 2, sY: h * 3 },
       { sX: 0, sY: h * 2 },
       { sX: w, sY: h * 2 },
+    ],
+    [JUMP_2]: [
+      // { sX: 0, sY: h * 2 },
+      { sX: w, sY: h * 2 },
+      { sX: w * 2, sY: h * 2 },
+      { sX: w * 3, sY: h * 2 },
+      { sX: w * 4, sY: h * 2 },
+      { sX: w * 5, sY: h * 2 },
+      { sX: w * 6, sY: h * 2 },
+      { sX: 0, sY: h * 3 },
+      { sX: w, sY: h * 3 },
+      { sX: w * 2, sY: h * 3 },
+      // { sX: 0, sY: h * 2 },
+      // { sX: w, sY: h * 2 },
     ],
     [SLIDE]: [
       { sX: w * 3, sY: h * 3 },

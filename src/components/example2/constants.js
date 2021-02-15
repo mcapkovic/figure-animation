@@ -10,5 +10,6 @@ export const ATTACK_4 = "attack4";
 export const ATTACK_5 = "attack5";
 export const ATTACK_6 = "attack6";
 export const JUMP = "jump";
+export const JUMP_2 = "jump2";
 export const RIGHT = "right";
 export const LEFT = "left";
