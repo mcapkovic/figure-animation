@@ -18,7 +18,10 @@
 
     if (isFirstPlay) {
       setTimeout(function () {
-        if (videoState === 2) return;
+        if (videoState === 2) toggleDemo(true);
+      }, 4000);
+
+      setTimeout(function () {
         toggleDemo(false);
       }, 1000);
       isFirstPlay = false;
