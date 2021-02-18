@@ -321,6 +321,15 @@
 <div class="game-wrapper">
   <canvas id="game-canvas" class="game" height="793" width="100" />
 
+  <div class='touch-buttons'>
+    <button on:click={() => {
+      changeHeroAnimation(SLIDE);
+    }}/>
+    <button on:click={() => {
+      changeHeroAnimation(JUMP);
+    }}/>
+  </div>
+
   <div class="buttons">
     <button
       on:click={() => {
@@ -437,6 +446,24 @@
     position: relative;
     text-align: left;
     background: #0d1222;
+  }
+
+
+  .touch-buttons{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+  }
+  .touch-buttons button{
+    margin: 0;
+    flex-grow: 1;
+    border: none;
+    background: none;
+    outline:none;
+    cursor: default;
   }
   .buttons {
     /* position: absolute;
