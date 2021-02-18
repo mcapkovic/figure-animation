@@ -3,7 +3,6 @@
   import { getHeroAnimation } from "./animations";
   import YouTube0 from "./YouTube0.svelte";
   import BackgroundPlayer from "./BackgroundPlayer.svelte";
-
   import {
     IDLE,
     IDLE_2,
@@ -24,8 +23,6 @@
 
   let isMoving = false;
   let aminationDirection = RIGHT;
-  let heroAminationType = IDLE;
-  let defaultHeroAnimation = IDLE;
   let frames = 0;
   let yOffset = 0;
   let lastPressedKey = -1;
@@ -148,6 +145,9 @@
     frame: 0,
     period: 15,
 
+    animationType: IDLE,
+    defaultAnimationType: IDLE,
+
     draw: function () {
       const { w, h, dX, dY } = this;
       const { sX, sY } = this.animation[this.frame];
@@ -183,18 +183,18 @@
 
       if (
         this.frame === this.animation.length - 1 &&
-        heroAminationType !== RUN &&
-        heroAminationType !== IDLE &&
-        heroAminationType !== IDLE_2 &&
-        heroAminationType !== CROUCH
+        this.animationType !== RUN &&
+        this.animationType !== IDLE &&
+        this.animationType !== IDLE_2 &&
+        this.animationType !== CROUCH
       )
-        heroAminationType = defaultHeroAnimation;
+        this.animationType = this.defaultAnimationType;
     },
 
     update: function () {
-      this.animation = getHeroAnimation(heroAminationType, hero.w, hero.h);
+      this.animation = getHeroAnimation(this.animationType, hero.w, hero.h);
 
-      switch (heroAminationType) {
+      switch (this.animationType) {
         case IDLE:
           this.period = 15;
           break;
@@ -271,12 +271,12 @@
       isMoving = true;
       changeHeroAnimation(RUN);
     } else if (event.keyCode === 40 && event.keyCode !== lastPressedKey) {
-      if (defaultHeroAnimation === RUN) {
+      if (hero.defaultAnimationType === RUN) {
         changeHeroAnimation(SLIDE);
       } else {
         changeHeroAnimation(CROUCH);
       }
-    }else if(event.keyCode === 38 && event.keyCode !== lastPressedKey){
+    } else if (event.keyCode === 38 && event.keyCode !== lastPressedKey) {
       changeHeroAnimation(JUMP_2);
     }
     lastPressedKey = event.keyCode;
@@ -285,10 +285,10 @@
   function handleKeyup(event) {
     if (event.keyCode === 39 && aminationDirection === "right") {
       isMoving = false;
-      changeHeroAnimation(IDLE)
+      changeHeroAnimation(IDLE);
     } else if (event.keyCode === 37 && aminationDirection === "left") {
       isMoving = false;
-      changeHeroAnimation(IDLE)
+      changeHeroAnimation(IDLE);
     }
 
     if (event.keyCode === lastPressedKey) lastPressedKey = -1;
@@ -298,8 +298,8 @@
 
   function changeHeroAnimation(type) {
     hero.frame = 0;
-    if (defaultHeroAnimationsList.includes(type)) defaultHeroAnimation = type;
-    heroAminationType = type;
+    if (defaultHeroAnimationsList.includes(type)) hero.defaultAnimationType = type;
+    hero.animationType = type;
   }
 
   function toggleDemo(isPlaying) {
@@ -312,7 +312,6 @@
       // heroAminationType = RUN;
       isMoving = true;
       changeHeroAnimation(RUN);
-
     }
   }
 </script>
@@ -325,9 +324,9 @@
   <div class="buttons">
     <button
       on:click={() => {
-        isMoving = heroAminationType === IDLE;
+        isMoving = hero.animationType === IDLE;
         // changeHeroAnimation(heroAminationType === IDLE ? RUN : IDLE);
-        if (heroAminationType === IDLE) {
+        if (hero.animationType === IDLE) {
           // playVideo()
           changeHeroAnimation(RUN);
         } else {

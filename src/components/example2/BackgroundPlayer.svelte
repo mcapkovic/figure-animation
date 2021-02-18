@@ -1,12 +1,10 @@
 <script>
   import YouTube from "./YouTube.svelte";
   import { debounce } from "../../utils";
+  export let toggleDemo;
 
   const VISIBLE = "visible";
   const HIDDEN = "hidden";
-
-  export let toggleDemo;
-
   let player1;
   let videoVisibility = HIDDEN;
   let videoState = -1;
