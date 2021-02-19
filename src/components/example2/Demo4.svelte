@@ -3,6 +3,7 @@
   import { getHeroAnimation } from "./animations";
   import YouTube0 from "./YouTube0.svelte";
   import BackgroundPlayer from "./BackgroundPlayer.svelte";
+  import DemoButtons from "./DemoButtons.svelte";
   import {
     IDLE,
     IDLE_2,
@@ -214,6 +215,7 @@
       this.frame = this.frame % this.animation.length;
     },
   };
+  
   // DRAW
   function draw() {
     ctx.fillStyle = "#7693b3";
@@ -298,7 +300,8 @@
 
   function changeHeroAnimation(type) {
     hero.frame = 0;
-    if (defaultHeroAnimationsList.includes(type)) hero.defaultAnimationType = type;
+    if (defaultHeroAnimationsList.includes(type))
+      hero.defaultAnimationType = type;
     hero.animationType = type;
   }
 
@@ -321,123 +324,23 @@
 <div class="game-wrapper">
   <canvas id="game-canvas" class="game" height="793" width="100" />
 
-  <div class='touch-buttons'>
-    <button on:click={() => {
-      changeHeroAnimation(SLIDE);
-    }}/>
-    <button on:click={() => {
-      changeHeroAnimation(JUMP);
-    }}/>
-  </div>
-
-  <div class="buttons">
-    <button
-      on:click={() => {
-        isMoving = hero.animationType === IDLE;
-        // changeHeroAnimation(heroAminationType === IDLE ? RUN : IDLE);
-        if (hero.animationType === IDLE) {
-          // playVideo()
-          changeHeroAnimation(RUN);
-        } else {
-          // stopVideo()
-          changeHeroAnimation(IDLE);
-        }
-      }}
-    >
-      {isMoving ? "stop" : "start"}
-    </button>
-
-    <button
-      on:click={() => {
-        changeHeroAnimation(RUN);
-      }}
-    >
-      {RUN}
-    </button>
-
-    <button
-      on:click={() => {
-        changeHeroAnimation(IDLE);
-      }}
-    >
-      {IDLE}
-    </button>
-
-    <button
-      on:click={() => {
-        changeHeroAnimation(IDLE_2);
-      }}
-    >
-      {IDLE_2}
-    </button>
-
-    <button
-      on:click={() => {
-        changeHeroAnimation(JUMP);
-      }}
-    >
-      jump
-    </button>
-
+  <div class="touch-buttons">
     <button
       on:click={() => {
         changeHeroAnimation(SLIDE);
       }}
-    >
-      slide
-    </button>
-
+    />
     <button
       on:click={() => {
-        changeHeroAnimation(ATTACK);
+        changeHeroAnimation(JUMP);
       }}
-    >
-      attack
-    </button>
-
-    <button
-      on:click={() => {
-        changeHeroAnimation(ATTACK_2);
-      }}
-    >
-      {ATTACK_2}
-    </button>
-
-    <button
-      on:click={() => {
-        changeHeroAnimation(ATTACK_3);
-      }}
-    >
-      {ATTACK_3}
-    </button>
-
-    <button
-      on:click={() => {
-        changeHeroAnimation(ATTACK_4);
-      }}
-    >
-      {ATTACK_4}
-    </button>
-
-    <button
-      on:click={() => {
-        changeHeroAnimation(ATTACK_5);
-      }}
-    >
-      {ATTACK_5}
-    </button>
-
-    <button
-      on:click={() => {
-        changeHeroAnimation(CROUCH);
-      }}
-    >
-      {CROUCH}
-    </button>
+    />
   </div>
 
+  <DemoButtons {isMoving} {hero} {changeHeroAnimation} />
+
   <br />
-  <YouTube0 />
+  <!-- <YouTube0 /> -->
   <div><BackgroundPlayer {toggleDemo} /></div>
 </div>
 
@@ -448,34 +351,21 @@
     background: #0d1222;
   }
 
-
-  .touch-buttons{
+  .touch-buttons {
     position: absolute;
-    top:0;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
     display: flex;
   }
-  .touch-buttons button{
+  .touch-buttons button {
     margin: 0;
     flex-grow: 1;
     border: none;
     background: none;
-    outline:none;
+    outline: none;
     cursor: default;
-  }
-  .buttons {
-    /* position: absolute;
-    bottom: 0; */
-    display: flex;
-    max-width: 100%;
-    overflow: auto;
-    width: 100%;
-  }
-
-  .buttons button {
-    margin-right: 2px;
   }
 
   .game {
